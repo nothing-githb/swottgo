@@ -11,61 +11,59 @@ export function activate(context: vscode.ExtensionContext) {
   // This line of code will only be executed once when your extension is activated
   console.log('Congratulations, your extension "swottgo" is now active!');
 
-  // The command has been defined in the package.json file
-  // Now provide the implementation of the command with registerCommand
-  // The commandId parameter must match the command field in package.json
-  let disposable = vscode.commands.registerCommand("swottgo.helloWorld", () => {
-    // The code you place here will be executed every time your command is executed
-    // Display a message box to the user
-    vscode.window.showInformationMessage("Hello World from SwotTgo!");
-  });
-
-  vscode.commands.registerCommand(
+  let disposable = vscode.commands.registerCommand(
     "extension.cleanBuild",
     async (uri: vscode.Uri) => {
-      processCommand(uri, "cleanBuild", false);
+      processCommand(uri, "cleanBuild");
     }
   );
 
   vscode.commands.registerCommand(
     "extension.changeBsp",
     async (uri: vscode.Uri) => {
-      processCommand(uri, "changeBsp", false);
+      processCommand(uri, "changeBsp");
     }
   );
 
   vscode.commands.registerCommand(
     "extension.downloadToTarget",
     async (uri: vscode.Uri) => {
-      processCommand(uri, "downloadToTarget", true);
+      processCommand(uri, "downloadToTarget");
     }
   );
 
   vscode.commands.registerCommand(
     "extension.changeBspAndCleanBuild",
     async (uri: vscode.Uri) => {
-      processCommand(uri, "changeBspAndCleanBuild", false);
+      processCommand(uri, "changeBspAndCleanBuild");
     }
   );
 
   vscode.commands.registerCommand(
     "extension.cleanBuildAndDownloadToTarget",
     async (uri: vscode.Uri) => {
-      processCommand(uri, "cleanBuildAndDownloadToTarget", false);
+      processCommand(uri, "cleanBuildAndDownloadToTarget");
     }
   );
 
   vscode.commands.registerCommand(
     "extension.changeBspAndCleanBuildAndDownloadToTarget",
     async (uri: vscode.Uri) => {
-      processCommand(uri, "changeBspAndCleanBuildAndDownloadToTarget", false);
+      processCommand(uri, "changeBspAndCleanBuildAndDownloadToTarget");
     }
   );
 
   vscode.commands.registerCommand(
     "extension.objDump",
     async (uri: vscode.Uri) => {
-      processCommand(uri, "objDump", true);
+      processCommand(uri, "objDump");
+    }
+  );
+
+  vscode.commands.registerCommand(
+    "extension.selectElfForDebug",
+    async (uri: vscode.Uri) => {
+      processCommand(uri, "selectElfForDebug");
     }
   );
 
@@ -91,8 +89,7 @@ function extractStringsFromCurlyBraces(input: string): string[] {
 
 async function processCommand(
   uri: vscode.Uri,
-  command: string,
-  isFullPath: boolean
+  command: string
 ) {
   let itemAbsString: string;
   let itemRelString: string;

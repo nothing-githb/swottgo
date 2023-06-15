@@ -14,73 +14,78 @@
   "contributes": {
     "commands": [
       {
-        "command": "swottgo.helloWorld",
-        "title": "Hello World"
-      },
-      {
         "command": "extension.changeBsp",
-        "title": "Swot: Change Bsp"
+        "title": "TGO: Change Bsp"
       },
       {
         "command": "extension.cleanBuild",
-        "title": "Swot: Clean Build"
+        "title": "TGO: Clean Build"
       },
       {
         "command": "extension.downloadToTarget",
-        "title": "Swot: Download to Target"
+        "title": "TGO: Download to Target"
       },
       {
         "command": "extension.changeBspAndCleanBuild",
-        "title": "Swot: Change Bsp / Clean Build"
+        "title": "TGO: Change Bsp / Clean Build"
       },
       {
         "command": "extension.cleanBuildAndDownloadToTarget",
-        "title": "Swot: Clean Build / Download to Target"
+        "title": "TGO: Clean Build / Download to Target"
       },
       {
         "command": "extension.changeBspAndCleanBuildAndDownloadToTarget",
-        "title": "Swot: Change Bsp / Clean Build / Download to Target"
+        "title": "TGO: Change Bsp / Clean Build / Download to Target"
       },
       {
         "command": "extension.objDump",
         "title": "Swot: Get Objdump"
+      },
+      {
+        "command": "extension.selectElfForDebug",
+        "title": "Swot: Select for Debug"
       }
     ],
     "menus": {
       "explorer/context": [
         {
           "command": "extension.changeBsp",
-          "group": "tgo",
+          "group": "tgo@1",
           "when": "explorerResourceIsFolder"
         },
         {
           "command": "extension.cleanBuild",
-          "group": "tgo",
+          "group": "tgo@2",
           "when": "explorerResourceIsFolder"
         },
         {
           "command": "extension.downloadToTarget",
-          "group": "tgo",
+          "group": "tgo@3",
           "when": "!explorerResourceIsFolder && resourceExtname == .pack"
         },
         {
           "command": "extension.changeBspAndCleanBuild",
-          "group": "tgo",
+          "group": "tgo@4",
           "when": "explorerResourceIsFolder"
         },
         {
           "command": "extension.cleanBuildAndDownloadToTarget",
-          "group": "tgo",
+          "group": "tgo@5",
           "when": "explorerResourceIsFolder"
         },
         {
           "command": "extension.changeBspAndCleanBuildAndDownloadToTarget",
-          "group": "tgo",
+          "group": "tgo@6",
           "when": "explorerResourceIsFolder"
         },
         {
           "command": "extension.objDump",
-          "group": "tgo",
+          "group": "tgo@7",
+          "when": "!explorerResourceIsFolder && resourceExtname == .elf"
+        },
+        {
+          "command": "extension.selectElfForDebug",
+          "group": "tgo@8",
           "when": "!explorerResourceIsFolder && resourceExtname == .elf"
         }
       ]
@@ -128,6 +133,11 @@
           "type": "string",
           "default": "objdump {clicked_abs_path}",
           "description": "Get obj dump command"
+        },
+        "swotide.selectElfForDebug": {
+          "type": "string",
+          "default": "gdb_path {clicked_abs_path}",
+          "description": "Select elf for debug command"
         }
       }
     }
