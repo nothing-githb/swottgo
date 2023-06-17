@@ -2,7 +2,7 @@
   "name": "swottgo",
   "displayName": "SwotTgo",
   "description": "VsCode extension of GzIS TGO.",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "engines": {
     "vscode": "^1.74.0"
   },
@@ -15,27 +15,27 @@
     "commands": [
       {
         "command": "extension.changeBsp",
-        "title": "TGO: Change Bsp"
+        "title": "Swot: Change Bsp"
       },
       {
         "command": "extension.cleanBuild",
-        "title": "TGO: Clean Build"
+        "title": "Swot: Clean Build"
       },
       {
         "command": "extension.downloadToTarget",
-        "title": "TGO: Download to Target"
+        "title": "Swot: Download to Target"
       },
       {
         "command": "extension.changeBspAndCleanBuild",
-        "title": "TGO: Change Bsp / Clean Build"
+        "title": "Swot: Change Bsp / Clean Build"
       },
       {
         "command": "extension.cleanBuildAndDownloadToTarget",
-        "title": "TGO: Clean Build / Download to Target"
+        "title": "Swot: Clean Build / Download to Target"
       },
       {
         "command": "extension.changeBspAndCleanBuildAndDownloadToTarget",
-        "title": "TGO: Change Bsp / Clean Build / Download to Target"
+        "title": "Swot: Change Bsp / Clean Build / Download to Target"
       },
       {
         "command": "extension.objDump",
@@ -44,6 +44,10 @@
       {
         "command": "extension.selectElfForDebug",
         "title": "Swot: Select for Debug"
+      },
+      {
+        "command": "extension.openTftp",
+        "title": "Swot: Open TFTP Here"
       }
     ],
     "menus": {
@@ -87,6 +91,11 @@
           "command": "extension.selectElfForDebug",
           "group": "tgo@8",
           "when": "!explorerResourceIsFolder && resourceExtname == .elf"
+        },
+        {
+          "command": "extension.openTftp",
+          "group": "tgo@9",
+          "when": "explorerResourceIsFolder"
         }
       ]
     },
@@ -138,6 +147,11 @@
           "type": "string",
           "default": "gdb_path {clicked_abs_path}",
           "description": "Select elf for debug command"
+        },
+        "swotide.openTftp": {
+          "type": "string",
+          "default": "tftp {clicked_abs_path}",
+          "description": "Open TFTP command"
         }
       }
     }

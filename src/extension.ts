@@ -67,6 +67,13 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
+  vscode.commands.registerCommand(
+    "extension.openTftp",
+    async (uri: vscode.Uri) => {
+      processCommand(uri, "openTftp");
+    }
+  );
+
   context.subscriptions.push(disposable);
 }
 
