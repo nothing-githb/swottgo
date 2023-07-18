@@ -104,8 +104,8 @@ async function processCommand(
   if (uri) {
     try {
       // Get the string of the clicked item
-      itemAbsString = uri.fsPath;
-      itemRelString = path.basename(uri.fsPath);
+      itemAbsString = uri.fsPath.replace('\\', '/');
+      itemRelString = path.basename(uri.fsPath).replace('\\', '/');
 
     } catch (error) {
       vscode.window.showErrorMessage(`Failed to get item information ${error}`);
