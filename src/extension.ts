@@ -74,6 +74,13 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
+  vscode.commands.registerCommand(
+    "extension.runItInQemu",
+    async (uri: vscode.Uri) => {
+      processCommand(uri, "runItInQemu");
+    }
+  );
+
   context.subscriptions.push(disposable);
 }
 

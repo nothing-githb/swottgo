@@ -48,6 +48,10 @@
       {
         "command": "extension.openTftp",
         "title": "Swot: Open TFTP Here"
+      },
+      {
+        "command": "extension.runItInQemu",
+        "title": "Swot: Run it in Qemu"
       }
     ],
     "menus": {
@@ -96,6 +100,11 @@
           "command": "extension.openTftp",
           "group": "tgo@9",
           "when": "explorerResourceIsFolder"
+        },
+        {
+          "command": "extension.runItInQemu",
+          "group": "tgo@10",
+          "when": "resourceExtname == .elf || resourceExtname == .pack"
         }
       ]
     },
@@ -152,6 +161,11 @@
           "type": "string",
           "default": "tftp {clicked_abs_path}",
           "description": "Open TFTP command"
+        },
+        "swotide.runItInQemu": {
+          "type": "string",
+          "default": "qemu.exe {clicked_abs_path}",
+          "description": "Run It In Qemu command"
         }
       }
     }
