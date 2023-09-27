@@ -167,6 +167,12 @@ async function processCommand(
             itemRelString
           );
         }
+        else if (elem === "json_file_path") {
+          newCleanBuildCommand = newCleanBuildCommand.replace(
+            "{" + elem + "}",
+            jsonFilePath
+          );
+        }
         else {
           const propertyPath = elem;
           const pathParts = propertyPath.split(".");
