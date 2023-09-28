@@ -111,12 +111,16 @@ async function processCommand(
   if (uri) {
     try {
       // Get the string of the clicked item
-      itemAbsString = uri.fsPath.replace('\\', '/');
-      itemRelString = path.basename(uri.fsPath).replace('\\', '/');
+      itemAbsString = uri.fsPath.replaceAll('\\', '/');
+      itemRelString = path.basename(uri.fsPath).replaceAll('\\', '/');
 
     } catch (error) {
       vscode.window.showErrorMessage(`Failed to get item information ${error}`);
     }
+  }
+  else
+  {
+    vscode.window.showErrorMessage(`undefined ${uri}`);
   }
 
   // Get the configuration for the current workspace
