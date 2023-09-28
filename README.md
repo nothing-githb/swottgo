@@ -7,6 +7,7 @@ settings files.
 
  - ${clicked_abs_path}
  - ${clicked_rel_path}
+ - ${json_file_path}
  - ${json_file.data}
 
 ## Commands
@@ -76,4 +77,18 @@ If this code is run on the `/home/desktop/a.elf` folder, below code will be run 
 
 ```
 $ target_runner.py --target=qemu -path=/home/desktop/a.elf
+```
+
+### Example 4
+
+Json file name can be use by adding the following command to the settings (json) file.
+
+```
+"swotide.objDump" : "echo ${json_file_path}",
+```
+
+If this code is run, below code will be run in the terminal.
+
+```
+$ echo /home/desktop/file.json
 ```
