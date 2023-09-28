@@ -1,8 +1,9 @@
 {
   "name": "swottgo",
-  "displayName": "SwotTgo",
-  "description": "VsCode extension of GzIS TGO.",
-  "version": "0.1.1",
+  "displayName": "SwotCode",
+  "description": "IDE extensions of SwotCode.(SwotTGO, SwotIDE)",
+  "icon": "logo/logo.png",
+  "version": "0.1.2",
   "engines": {
     "vscode": "^1.74.0"
   },
