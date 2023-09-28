@@ -88,13 +88,13 @@ export function activate(context: vscode.ExtensionContext) {
 export function deactivate() {}
 
 function extractStringsFromCurlyBraces(input: string): string[] {
-  const regex = /{([^}]+)}/g;
+  const regex = /\${([^}]+)}/g;
   const matches = input.match(regex);
 
   if (matches) {
     return matches.map((match) => {
       // Remove the curly braces from the matched string
-      return match.slice(1, -1);
+      return match.slice(2, -1);
     });
   }
 
@@ -168,19 +168,19 @@ async function processCommand(
       for (const elem of extractedStrings) {
         if (elem === "clicked_abs_path") {
           newCleanBuildCommand = newCleanBuildCommand.replace(
-            "{" + elem + "}",
+            "${" + elem + "}",
             itemAbsString
           );
         } 
         else if (elem === "clicked_rel_path") {
           newCleanBuildCommand = newCleanBuildCommand.replace(
-            "{" + elem + "}",
+            "${" + elem + "}",
             itemRelString
           );
         }
         else if (elem === "json_file_path") {
           newCleanBuildCommand = newCleanBuildCommand.replace(
-            "{" + elem + "}",
+            "${" + elem + "}",
             jsonFilePath
           );
         }
@@ -198,7 +198,7 @@ async function processCommand(
             }
           }
           newCleanBuildCommand = newCleanBuildCommand.replace(
-            "{" + elem + "}",
+            "${" + elem + "}",
             result
           );
         }
