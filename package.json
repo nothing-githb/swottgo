@@ -5,7 +5,7 @@
   "publisher": "nothing-githb",
   "icon": "logo/logo.png",
   "license": "SEE LICENSE IN LICENSE.md",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "engines": {
     "vscode": "^1.74.0"
   },

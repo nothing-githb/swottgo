@@ -34,7 +34,6 @@ settings (json) file.
 ```
 "swotide.openTftp" : "tftp ${clicked_rel_path}"
 ```
-
 If this code is run on the example folder, below code will be run in the terminal.
 
 ```
@@ -61,7 +60,7 @@ The information in the json file can be used by adding the following command to 
 
 ```
 "swotide.jsonFile" : "/home/desktop/file.json",
-"swotide.downloadToTarget" : "qemu.exe --target=${target.target_name} -path=${clicked_abs_path}"
+"swotide.downloadToTarget" : "qemu.exe --target=${json:target.target_name} -path=${clicked_abs_path}"
 ```
 
 json file: `/home/desktop/file.json`
@@ -91,4 +90,23 @@ If this code is run, below code will be run in the terminal.
 
 ```
 $ echo /home/desktop/file.json
+```
+
+### Example 4
+
+The information in the vscode configuration file can be used by adding the following command to the settings (json) file.
+
+```
+"swotide.cleanBuild": "echo ${config:swotcode.env.target} > ${clicked_abs_path}/ss.log",
+"swotcode" : {
+    "env" :{
+        "target": "raspberry"
+    }
+},
+```
+
+If this code is run on the "log" folder, below code will be run in the terminal.
+
+```
+$ echo raspberry > log/ss.log
 ```

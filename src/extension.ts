@@ -3,6 +3,7 @@
 import * as vscode from "vscode";
 import * as fs from "fs";
 import * as path from "path";
+import { config } from "process";
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -271,8 +272,26 @@ async function processCommand(
             jsonFilePath
           );
         }
-        else {
-          const propertyPath = elem;
+        else if (elem.includes("config:")) {
+          var propertyPath = elem;
+          propertyPath = propertyPath.replace("config:", "");
+          const pathParts = propertyPath.split(".");
+
+          let configData = vscode.workspace.getConfiguration().get(propertyPath);
+
+          if (configData)
+          {
+            let result : string = configData.toString();
+  
+            newCleanBuildCommand = newCleanBuildCommand.replace(
+              "${" + elem + "}",
+              result
+            );
+          }
+        }
+        else if (elem.includes("json:")) {
+          var propertyPath = elem;
+          propertyPath = propertyPath.replace("json:", "");
           const pathParts = propertyPath.split(".");
 
           let result = jsonData;
