@@ -5,7 +5,7 @@
   "publisher": "nothing-githb",
   "icon": "logo/logo.png",
   "license": "SEE LICENSE IN LICENSE.md",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "engines": {
     "vscode": "^1.74.0"
   },
@@ -59,6 +59,18 @@
       {
         "command": "extension.showLDRAResults",
         "title": "Swot: Show LDRA diagnostics"
+      },
+      {
+        "command": "extension.extraCommand1",
+        "title": "Swot: Extra command 1"
+      },
+      {
+        "command": "extension.extraCommand2",
+        "title": "Swot: Extra command 2"
+      },
+      {
+        "command": "extension.extraCommand3",
+        "title": "Swot: Extra command 3"
       }
     ],
     "menus": {
@@ -112,6 +124,18 @@
           "command": "extension.runItInQemu",
           "group": "tgo@10",
           "when": "resourceExtname == .elf || resourceExtname == .pack"
+        },
+        {
+          "command": "extension.extraCommand1",
+          "group": "tgo@11"
+        },
+        {
+          "command": "extension.extraCommand2",
+          "group": "tgo@12"
+        },
+        {
+          "command": "extension.extraCommand3",
+          "group": "tgo@13"
         }
       ]
     },
@@ -178,6 +202,21 @@
           "type": "string",
           "default": "ldra result json path",
           "description": "Show LDRA Diagnostics in Active File"
+        },
+        "swotide.extraCommand1": {
+          "type": "string",
+          "default": "echo 'extra command 1'",
+          "description": "Extra command 1"
+        },
+        "swotide.extraCommand2": {
+          "type": "string",
+          "default": "echo 'extra command 2'",
+          "description": "Extra command 2"
+        },
+        "swotide.extraCommand3": {
+          "type": "string",
+          "default": "echo 'extra command 3'",
+          "description": "Extra command 3"
         }
       }
     }

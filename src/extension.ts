@@ -82,6 +82,27 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
+  vscode.commands.registerCommand(
+    "extension.extraCommand1",
+    async (uri: vscode.Uri) => {
+      processCommand(uri, "extraCommand1");
+    }
+  );
+
+  vscode.commands.registerCommand(
+    "extension.extraCommand2",
+    async (uri: vscode.Uri) => {
+      processCommand(uri, "extraCommand2");
+    }
+  );
+
+  vscode.commands.registerCommand(
+    "extension.extraCommand3",
+    async (uri: vscode.Uri) => {
+      processCommand(uri, "extraCommand3");
+    }
+  );
+
   const collection = vscode.languages.createDiagnosticCollection('swot-ldra');
 
   vscode.commands.registerCommand(

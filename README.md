@@ -23,7 +23,10 @@ settings files.
  - `swotide.selectElfForDebug` : Explorer view command. 
  - `swotide.openTftp` : Explorer view command. 
  - `swotide.runItInQemu` : Explorer view command. 
-
+ - `swotide.extraCommand1` : Extra command 1.
+ - `swotide.extraComamnd2` : Extra command 2.
+ - `swotide.extraCommand3` : Extra command 3.
+  
 ## Examples
 
 ### Example 1
