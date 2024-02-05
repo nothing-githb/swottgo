@@ -8,7 +8,7 @@ settings files.
  - ${clicked_abs_path}
  - ${clicked_rel_path}
  - ${json_file_path}
- - ${json_file.data}
+ - ${json:data}
 
 ## Commands
 
@@ -37,7 +37,7 @@ settings (json) file.
 ```
 "swotide.openTftp" : "tftp ${clicked_rel_path}"
 ```
-If this code is run on the example folder, below code will be run in the terminal.
+If this code is run on the `example` folder (with right click), below code will be run in the terminal.
 
 ```
 $ tftp example
@@ -51,7 +51,7 @@ Objdump of the desired elf file can be obtained by adding the following command 
 "swotide.objDump" : "objdump ${clicked_abs_path}",
 ```
 
-If this code is run on the `/home/desktop/a.elf` folder, below code will be run in the terminal.
+If this code is run on the `/home/desktop/a.elf` file (with right click), below code will be run in the terminal.
 
 ```
 $ objdump /home/desktop/a.elf
@@ -75,7 +75,7 @@ json file: `/home/desktop/file.json`
 }
 ```
 
-If this code is run on the `/home/desktop/a.elf` folder, below code will be run in the terminal.
+If this code is run on the `/home/desktop/a.elf` file (with right click), below code will be run in the terminal.
 
 ```
 $ target_runner.py --target=qemu -path=/home/desktop/a.elf
@@ -89,7 +89,7 @@ Json file name can be use by adding the following command to the settings (json)
 "swotide.objDump" : "echo ${json_file_path}",
 ```
 
-If this code is run, below code will be run in the terminal.
+If this code is run on the `/home/desktop/file.json` file (with right click), below code will be run in the terminal.
 
 ```
 $ echo /home/desktop/file.json
@@ -100,7 +100,7 @@ $ echo /home/desktop/file.json
 The information in the vscode configuration file can be used by adding the following command to the settings (json) file.
 
 ```
-"swotide.cleanBuild": "echo ${config:swotcode.env.target} > ${clicked_abs_path}/ss.log",
+"swotide.cleanBuild": "echo ${config:swotcode.env.target} > ${clicked_abs_path}",
 "swotcode" : {
     "env" :{
         "target": "raspberry"
@@ -108,7 +108,7 @@ The information in the vscode configuration file can be used by adding the follo
 },
 ```
 
-If this code is run on the "log" folder, below code will be run in the terminal.
+If this code is run on the `log/ss.log` file (with right click), below code will be run in the terminal.
 
 ```
 $ echo raspberry > log/ss.log
