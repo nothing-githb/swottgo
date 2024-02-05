@@ -1,12 +1,12 @@
 {
   "name": "swottgo",
   "displayName": "SwotCode",
-  "description": "IDE extensions of SwotCode.(SwotTGO, SwotIDE)",
-  "publisher": "HalisTahaSahin",
+  "description": "IDE capability to VSCode.",
+  "publisher": "Halis Taha Şahin",
   "repository": {"url": "https://github.com/nothing-githb/swottgo.git"},
   "icon": "logo/logo.png",
   "license": "SEE LICENSE IN LICENSE.md",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "engines": {
     "vscode": "^1.74.0"
   },
