@@ -2,7 +2,7 @@
   "name": "swottgo",
   "displayName": "SwotCode",
   "description": "IDE capability to VSCode.",
-  "publisher": "Halis Taha Şahin",
+  "publisher": "HalisTahaSahin",
   "repository": {"url": "https://github.com/nothing-githb/swottgo.git"},
   "icon": "logo/logo.png",
   "license": "SEE LICENSE IN LICENSE.md",
