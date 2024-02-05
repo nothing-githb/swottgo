@@ -57,10 +57,6 @@
         "title": "Swot: Run it in Qemu"
       },
       {
-        "command": "extension.showLDRAResults",
-        "title": "Swot: Show LDRA diagnostics"
-      },
-      {
         "command": "extension.extraCommand1",
         "title": "Swot: Extra command 1"
       },
@@ -197,11 +193,6 @@
           "type": "string",
           "default": "qemu.exe {clicked_abs_path}",
           "description": "Run It In Qemu command"
-        },
-        "swotide.showLDRAResults": {
-          "type": "string",
-          "default": "ldra result json path",
-          "description": "Show LDRA Diagnostics in Active File"
         },
         "swotide.extraCommand1": {
           "type": "string",
