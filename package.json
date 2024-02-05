@@ -3,6 +3,7 @@
   "displayName": "SwotCode",
   "description": "IDE extensions of SwotCode.(SwotTGO, SwotIDE)",
   "publisher": "nothing-githb",
+  "repository": {"url": "https://github.com/nothing-githb/swottgo.git"},
   "icon": "logo/logo.png",
   "license": "SEE LICENSE IN LICENSE.md",
   "version": "0.1.7",
