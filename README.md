@@ -35,7 +35,7 @@ TFTP can be started in the desired folder by adding the following command to the
 settings (json) file.
 
 ```
-"swotide.openTftp" : "tftp ${clicked_rel_path}"
+"swotide.openTftp" : {"macos": "tftp ${clicked_rel_path}"}
 ```
 If this code is run on the `example` folder (with right click), below code will be run in the terminal.
 
@@ -48,7 +48,7 @@ $ tftp example
 Objdump of the desired elf file can be obtained by adding the following command to the settings (json) file.
 
 ```
-"swotide.objDump" : "objdump ${clicked_abs_path}",
+"swotide.objDump" : {"macos": "objdump ${clicked_abs_path}"}
 ```
 
 If this code is run on the `/home/desktop/a.elf` file (with right click), below code will be run in the terminal.
@@ -62,8 +62,8 @@ $ objdump /home/desktop/a.elf
 The information in the json file can be used by adding the following command to the settings (json) file.
 
 ```
-"swotide.jsonFile" : "/home/desktop/file.json",
-"swotide.downloadToTarget" : "qemu.exe --target=${json:target.target_name} -path=${clicked_abs_path}"
+"swotide.jsonFile" : {"macos": "/home/desktop/file.json"}
+"swotide.downloadToTarget" : {"macos": "qemu.exe --target=${json:target.target_name} -path=${clicked_abs_path}"}
 ```
 
 json file: `/home/desktop/file.json`
@@ -86,7 +86,7 @@ $ target_runner.py --target=qemu -path=/home/desktop/a.elf
 Json file name can be use by adding the following command to the settings (json) file.
 
 ```
-"swotide.objDump" : "echo ${json_file_path}",
+"swotide.objDump" : {"macos": "echo ${json_file_path}"},
 ```
 
 If this code is run on the `/home/desktop/file.json` file (with right click), below code will be run in the terminal.
@@ -100,7 +100,7 @@ $ echo /home/desktop/file.json
 The information in the vscode configuration file can be used by adding the following command to the settings (json) file.
 
 ```
-"swotide.cleanBuild": "echo ${config:swotcode.env.target} > ${clicked_abs_path}",
+"swotide.cleanBuild": {"macos": "echo ${config:swotcode.env.target} > ${clicked_abs_path}"},
 "swotcode" : {
     "env" :{
         "target": "raspberry"

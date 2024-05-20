@@ -6,7 +6,7 @@
   "repository": {"url": "https://github.com/nothing-githb/swottgo.git"},
   "icon": "logo/logo.png",
   "license": "SEE LICENSE IN LICENSE.md",
-  "version": "0.1.8",
+  "version": "0.2.0",
   "engines": {
     "vscode": "^1.74.0"
   },
@@ -58,16 +58,12 @@
         "title": "Swot: Run it in Qemu"
       },
       {
+        "command": "extension.generateClipboard",
+        "title": "Swot: Generate Clipboard"
+      },
+      {
         "command": "extension.extraCommand1",
         "title": "Swot: Extra command 1"
-      },
-      {
-        "command": "extension.extraCommand2",
-        "title": "Swot: Extra command 2"
-      },
-      {
-        "command": "extension.extraCommand3",
-        "title": "Swot: Extra command 3"
       }
     ],
     "menus": {
@@ -123,16 +119,13 @@
           "when": "resourceExtname == .elf || resourceExtname == .pack"
         },
         {
+          "command": "extension.generateClipboard",
+          "group": "tgo@11",
+          "when": "resourceExtname == .elf || resourceExtname == .pack"
+        },
+        {
           "command": "extension.extraCommand1",
-          "group": "tgo@11"
-        },
-        {
-          "command": "extension.extraCommand2",
           "group": "tgo@12"
-        },
-        {
-          "command": "extension.extraCommand3",
-          "group": "tgo@13"
         }
       ]
     },
@@ -141,74 +134,213 @@
       "title": "SwotIDE Variables",
       "properties": {
         "swotide.jsonFile": {
-          "type": "string",
+          "type": "object",
+          "properties": {
+            "windows" : {
+              "type": "string"
+            },
+            "linux" : {
+              "type": "string"
+            },
+            "macos" : {
+              "type": "string"
+            }
+          },
           "default": "settings.json",
           "description": "Json file path to read variables"
         },
         "swotide.changeBsp": {
-          "type": "string",
+          "type": "object",
+          "properties": {
+            "windows" : {
+              "type": "string"
+            },
+            "linux" : {
+              "type": "string"
+            },
+            "macos" : {
+              "type": "string"
+            }
+          },
           "default": "command {clicked_rel_path}",
           "description": "Change bsp command"
         },
         "swotide.cleanBuild": {
-          "type": "string",
+          "type": "object",
+          "properties": {
+            "windows" : {
+              "type": "string"
+            },
+            "linux" : {
+              "type": "string"
+            },
+            "macos" : {
+              "type": "string"
+            }
+          },
           "default": "command {clicked_rel_path}",
           "description": "Clean Build command"
         },
         "swotide.downloadToTarget": {
-          "type": "string",
+          "type": "object",
+          "properties": {
+            "windows" : {
+              "type": "string"
+            },
+            "linux" : {
+              "type": "string"
+            },
+            "macos" : {
+              "type": "string"
+            }
+          },
           "default": "objdump {clicked_abs_path}",
           "description": "Download to target command"
         },
         "swotide.changeBspAndCleanBuild": {
-          "type": "string",
+          "type": "object",
+          "properties": {
+            "windows" : {
+              "type": "string"
+            },
+            "linux" : {
+              "type": "string"
+            },
+            "macos" : {
+              "type": "string"
+            }
+          },
           "default": "command {clicked_rel_path}",
           "description": "Change bsp command and Clean Build command"
         },
         "swotide.cleanBuildAndDownloadToTarget": {
-          "type": "string",
+          "type": "object",
+          "properties": {
+            "windows" : {
+              "type": "string"
+            },
+            "linux" : {
+              "type": "string"
+            },
+            "macos" : {
+              "type": "string"
+            }
+          },
           "default": "command {clicked_rel_path}",
           "description": "Clean Build command and Download to target command"
         },
         "swotide.changeBspAndCleanBuildAndDownloadToTarget": {
-          "type": "string",
+          "type": "object",
+          "properties": {
+            "windows" : {
+              "type": "string"
+            },
+            "linux" : {
+              "type": "string"
+            },
+            "macos" : {
+              "type": "string"
+            }
+          },
           "default": "command {clicked_rel_path}",
           "description": "Change bsp command and Clean Build command and Download to target command"
         },
         "swotide.objDump": {
-          "type": "string",
+          "type": "object",
+          "properties": {
+            "windows" : {
+              "type": "string"
+            },
+            "linux" : {
+              "type": "string"
+            },
+            "macos" : {
+              "type": "string"
+            }
+          },
           "default": "objdump {clicked_abs_path}",
           "description": "Get obj dump command"
         },
         "swotide.selectElfForDebug": {
-          "type": "string",
+          "type": "object",
+          "properties": {
+            "windows" : {
+              "type": "string"
+            },
+            "linux" : {
+              "type": "string"
+            },
+            "macos" : {
+              "type": "string"
+            }
+          },
           "default": "gdb_path {clicked_abs_path}",
           "description": "Select elf for debug command"
         },
         "swotide.openTftp": {
-          "type": "string",
+          "type": "object",
+          "properties": {
+            "windows" : {
+              "type": "string"
+            },
+            "linux" : {
+              "type": "string"
+            },
+            "macos" : {
+              "type": "string"
+            }
+          },
           "default": "tftp {clicked_abs_path}",
           "description": "Open TFTP command"
         },
         "swotide.runItInQemu": {
-          "type": "string",
+          "type": "object",
+          "properties": {
+            "windows" : {
+              "type": "string"
+            },
+            "linux" : {
+              "type": "string"
+            },
+            "macos" : {
+              "type": "string"
+            }
+          },
           "default": "qemu.exe {clicked_abs_path}",
           "description": "Run It In Qemu command"
+          
+        },
+        "swotide.generateClipboard": {
+          "type": "object",
+          "properties": {
+            "windows" : {
+              "type": "string"
+            },
+            "linux" : {
+              "type": "string"
+            },
+            "macos" : {
+              "type": "string"
+            }
+          },
+          "default": "echo {clicked_rel_path} | clip",
+          "description": "Generate Clipboard"
         },
         "swotide.extraCommand1": {
-          "type": "string",
+          "type": "object",
+          "properties": {
+            "windows" : {
+              "type": "string"
+            },
+            "linux" : {
+              "type": "string"
+            },
+            "macos" : {
+              "type": "string"
+            }
+          },
           "default": "echo 'extra command 1'",
           "description": "Extra command 1"
-        },
-        "swotide.extraCommand2": {
-          "type": "string",
-          "default": "echo 'extra command 2'",
-          "description": "Extra command 2"
-        },
-        "swotide.extraCommand3": {
-          "type": "string",
-          "default": "echo 'extra command 3'",
-          "description": "Extra command 3"
         }
       }
     }

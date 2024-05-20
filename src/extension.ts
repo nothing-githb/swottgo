@@ -83,23 +83,16 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   vscode.commands.registerCommand(
+    "extension.generateClipboard",
+    async (uri: vscode.Uri) => {
+      processCommand(uri, "generateClipboard");
+    }
+  );
+
+  vscode.commands.registerCommand(
     "extension.extraCommand1",
     async (uri: vscode.Uri) => {
       processCommand(uri, "extraCommand1");
-    }
-  );
-
-  vscode.commands.registerCommand(
-    "extension.extraCommand2",
-    async (uri: vscode.Uri) => {
-      processCommand(uri, "extraCommand2");
-    }
-  );
-
-  vscode.commands.registerCommand(
-    "extension.extraCommand3",
-    async (uri: vscode.Uri) => {
-      processCommand(uri, "extraCommand3");
     }
   );
 
@@ -123,25 +116,19 @@ function extractStringsFromCurlyBraces(input: string): string[] {
   return [];
 }
 
-async function processCommand(
-  uri: vscode.Uri,
-  command: string
-) {
+async function processCommand(uri: vscode.Uri, command: string) {
   let itemAbsString: string;
   let itemRelString: string;
 
   if (uri) {
     try {
       // Get the string of the clicked item
-      itemAbsString = uri.fsPath.replaceAll('\\', '/');
-      itemRelString = path.basename(uri.fsPath).replaceAll('\\', '/');
-
+      itemAbsString = uri.fsPath.replaceAll("\\", "/");
+      itemRelString = path.basename(uri.fsPath).replaceAll("\\", "/");
     } catch (error) {
       vscode.window.showErrorMessage(`Failed to get item information ${error}`);
     }
-  }
-  else 
-  {
+  } else {
     vscode.window.showErrorMessage(`undefined ${uri}`);
   }
 
@@ -149,28 +136,70 @@ async function processCommand(
   const configuration = vscode.workspace.getConfiguration("swotide");
 
   // Access the extension-specific variable from the user settings
-  const jsonFilePath = configuration.get<string>("jsonFile");
+  let jsonFilePath = configuration.get<string>("jsonFile");
   const cleanBuildCommand = configuration.get<string>(command);
+
+  if (!jsonFilePath) {
+    vscode.window.showErrorMessage(
+      "SwotIDE: Json file path is not found! (swotide.jsonFile)"
+    );
+    return;
+  }
 
   // Use the retrieved variable
   console.log(jsonFilePath);
   console.log(cleanBuildCommand);
 
+  if ("darwin" === process.platform) {
+    jsonFilePath = jsonFilePath.macos;
+  } else if ("linux" === process.platform) {
+    jsonFilePath = jsonFilePath.linux;
+  } else if ("win32" === process.platform) {
+    jsonFilePath = jsonFilePath.windows;
+  } else {
+    vscode.window.showErrorMessage(
+      "SwotIDE: Invalid platform! (windows, linux, macos)"
+    );
+    return;
+  }
+
   if (!jsonFilePath) {
     vscode.window.showErrorMessage(
-      "SwotIDE: Json file is not found!(swotide.jsonFile)"
+      "SwotIDE: Json file is not found for " +
+        process.platform +
+        "! (swotide.jsonFile)"
     );
     return;
   }
 
   if (!cleanBuildCommand) {
     vscode.window.showErrorMessage(
-      "SwotIDE: Clean build command is not found!(swotide.cleanBuild)"
+      "SwotIDE: Clean build command is not found! (swotide.cleanBuild)"
     );
     return;
   }
 
   let newCleanBuildCommand: string = cleanBuildCommand;
+
+  if ("darwin" === process.platform) {
+    newCleanBuildCommand = cleanBuildCommand.macos;
+  } else if ("linux" === process.platform) {
+    newCleanBuildCommand = cleanBuildCommand.linux;
+  } else if ("win32" === process.platform) {
+    newCleanBuildCommand = cleanBuildCommand.windows;
+  } else {
+    vscode.window.showErrorMessage(
+      "SwotIDE: Invalid platform! (windows, linux, macos)"
+    );
+    return;
+  }
+
+  if (!newCleanBuildCommand) {
+    vscode.window.showErrorMessage(
+      "SwotIDE: Valid command ("+command+") is not defined for " + process.platform.toString()
+    );
+    return;
+  }
 
   fs.readFile(jsonFilePath.toString(), "utf-8", (err, data) => {
     if (err) {
@@ -184,7 +213,8 @@ async function processCommand(
     try {
       const jsonData = JSON.parse(data);
 
-      const extractedStrings = extractStringsFromCurlyBraces(cleanBuildCommand);
+      const extractedStrings =
+        extractStringsFromCurlyBraces(newCleanBuildCommand);
       console.log(extractedStrings);
 
       for (const elem of extractedStrings) {
@@ -193,37 +223,34 @@ async function processCommand(
             "${" + elem + "}",
             itemAbsString
           );
-        }
-        else if (elem === "clicked_rel_path") {
+        } else if (elem === "clicked_rel_path") {
           newCleanBuildCommand = newCleanBuildCommand.replace(
             "${" + elem + "}",
             itemRelString
           );
-        }
-        else if (elem === "json_file_path") {
+        } else if (elem === "json_file_path") {
           newCleanBuildCommand = newCleanBuildCommand.replace(
             "${" + elem + "}",
             jsonFilePath
           );
-        }
-        else if (elem.includes("config:")) {
+        } else if (elem.includes("config:")) {
           var propertyPath = elem;
           propertyPath = propertyPath.replace("config:", "");
           const pathParts = propertyPath.split(".");
 
-          let configData = vscode.workspace.getConfiguration().get(propertyPath);
+          let configData = vscode.workspace
+            .getConfiguration()
+            .get(propertyPath);
 
-          if (configData)
-          {
-            let result : string = configData.toString();
-  
+          if (configData) {
+            let result: string = configData.toString();
+
             newCleanBuildCommand = newCleanBuildCommand.replace(
               "${" + elem + "}",
               result
             );
           }
-        }
-        else if (elem.includes("json:")) {
+        } else if (elem.includes("json:")) {
           var propertyPath = elem;
           propertyPath = propertyPath.replace("json:", "");
           const pathParts = propertyPath.split(".");
