@@ -135,9 +135,9 @@ async function processCommand(uri: vscode.Uri, command: string) {
   // Get the configuration for the current workspace
   // Access the extension-specific variable from the user settings
   let jsonFilePath = vscode.workspace.getConfiguration("swotide.jsonFile");
-  let jsonFilePathString: string | undefined;
+  let jsonFilePathStrUn: string | undefined;
+  let jsonFilePathStr: string;
   let cmdCommand = vscode.workspace.getConfiguration("swotide."+command);
-  let cmdCommandString: string | undefined;
 
   if (!jsonFilePath) {
     vscode.window.showErrorMessage(
@@ -158,11 +158,11 @@ async function processCommand(uri: vscode.Uri, command: string) {
   console.log(cmdCommand);
 
   if ("darwin" === process.platform) {
-    jsonFilePathString = jsonFilePath.get<string>("macos");
+    jsonFilePathStrUn = jsonFilePath.get<string>("macos");
   } else if ("linux" === process.platform) {
-    jsonFilePathString = jsonFilePath.get<string>("linux");
+    jsonFilePathStrUn = jsonFilePath.get<string>("linux");
   } else if ("win32" === process.platform) {
-    jsonFilePathString = jsonFilePath.get<string>("windows");
+    jsonFilePathStrUn = jsonFilePath.get<string>("windows");
   } else {
     vscode.window.showErrorMessage(
       "SwotIDE: Invalid platform! (windows, linux, macos)"
@@ -170,13 +170,17 @@ async function processCommand(uri: vscode.Uri, command: string) {
     return;
   }
 
-  if (!jsonFilePathString) {
+  if (!jsonFilePathStrUn) {
     vscode.window.showErrorMessage(
       "SwotIDE: Json file is not found for " +
         process.platform +
         "! (swotide.jsonFile)"
     );
     return;
+  }
+  else
+  {
+    jsonFilePathStr = jsonFilePathStrUn;
   }
 
   let newCleanBuildCommand: string | undefined;
@@ -206,7 +210,7 @@ async function processCommand(uri: vscode.Uri, command: string) {
     newCleanBuildCommandStr = newCleanBuildCommand;
   }
 
-  fs.readFile(jsonFilePathString.toString(), "utf-8", (err, data) => {
+  fs.readFile(jsonFilePathStr.toString(), "utf-8", (err, data) => {
     if (err) {
       vscode.window.showErrorMessage(
         `SwotIDE: Failed to read JSON file: ${err}`
@@ -236,7 +240,7 @@ async function processCommand(uri: vscode.Uri, command: string) {
         } else if (elem === "json_file_path") {
           newCleanBuildCommandStr = newCleanBuildCommandStr.replace(
             "${" + elem + "}",
-            jsonFilePathString
+            jsonFilePathStr
           );
         } else if (elem.includes("config:")) {
           var propertyPath = elem;
