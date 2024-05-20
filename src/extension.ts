@@ -133,11 +133,11 @@ async function processCommand(uri: vscode.Uri, command: string) {
   }
 
   // Get the configuration for the current workspace
-  const configuration = vscode.workspace.getConfiguration("swotide");
-
   // Access the extension-specific variable from the user settings
-  let jsonFilePath = configuration.get<string>("jsonFile");
-  const cleanBuildCommand = configuration.get<string>(command);
+  let jsonFilePath = vscode.workspace.getConfiguration("swotide.jsonFile");
+  let jsonFilePathString: string | undefined;
+  let cmdCommand = vscode.workspace.getConfiguration("swotide."+command);
+  let cmdCommandString: string | undefined;
 
   if (!jsonFilePath) {
     vscode.window.showErrorMessage(
@@ -146,16 +146,23 @@ async function processCommand(uri: vscode.Uri, command: string) {
     return;
   }
 
+  if (!cmdCommand) {
+    vscode.window.showErrorMessage(
+      "SwotIDE: Command is not found! ("+command+""
+    );
+    return;
+  }
+
   // Use the retrieved variable
   console.log(jsonFilePath);
-  console.log(cleanBuildCommand);
+  console.log(cmdCommand);
 
   if ("darwin" === process.platform) {
-    jsonFilePath = jsonFilePath.macos;
+    jsonFilePathString = jsonFilePath.get<string>("macos");
   } else if ("linux" === process.platform) {
-    jsonFilePath = jsonFilePath.linux;
+    jsonFilePathString = jsonFilePath.get<string>("linux");
   } else if ("win32" === process.platform) {
-    jsonFilePath = jsonFilePath.windows;
+    jsonFilePathString = jsonFilePath.get<string>("windows");
   } else {
     vscode.window.showErrorMessage(
       "SwotIDE: Invalid platform! (windows, linux, macos)"
@@ -163,7 +170,7 @@ async function processCommand(uri: vscode.Uri, command: string) {
     return;
   }
 
-  if (!jsonFilePath) {
+  if (!jsonFilePathString) {
     vscode.window.showErrorMessage(
       "SwotIDE: Json file is not found for " +
         process.platform +
@@ -172,21 +179,15 @@ async function processCommand(uri: vscode.Uri, command: string) {
     return;
   }
 
-  if (!cleanBuildCommand) {
-    vscode.window.showErrorMessage(
-      "SwotIDE: Clean build command is not found! (swotide.cleanBuild)"
-    );
-    return;
-  }
-
-  let newCleanBuildCommand: string = cleanBuildCommand;
+  let newCleanBuildCommand: string | undefined;
+  let newCleanBuildCommandStr: string;
 
   if ("darwin" === process.platform) {
-    newCleanBuildCommand = cleanBuildCommand.macos;
+    newCleanBuildCommand = cmdCommand.get<string>("macos");
   } else if ("linux" === process.platform) {
-    newCleanBuildCommand = cleanBuildCommand.linux;
+    newCleanBuildCommand = cmdCommand.get<string>("linux");
   } else if ("win32" === process.platform) {
-    newCleanBuildCommand = cleanBuildCommand.windows;
+    newCleanBuildCommand = cmdCommand.get<string>("windows");
   } else {
     vscode.window.showErrorMessage(
       "SwotIDE: Invalid platform! (windows, linux, macos)"
@@ -200,8 +201,12 @@ async function processCommand(uri: vscode.Uri, command: string) {
     );
     return;
   }
+  else
+  {
+    newCleanBuildCommandStr = newCleanBuildCommand;
+  }
 
-  fs.readFile(jsonFilePath.toString(), "utf-8", (err, data) => {
+  fs.readFile(jsonFilePathString.toString(), "utf-8", (err, data) => {
     if (err) {
       vscode.window.showErrorMessage(
         `SwotIDE: Failed to read JSON file: ${err}`
@@ -214,24 +219,24 @@ async function processCommand(uri: vscode.Uri, command: string) {
       const jsonData = JSON.parse(data);
 
       const extractedStrings =
-        extractStringsFromCurlyBraces(newCleanBuildCommand);
+        extractStringsFromCurlyBraces(newCleanBuildCommandStr);
       console.log(extractedStrings);
 
       for (const elem of extractedStrings) {
         if (elem === "clicked_abs_path") {
-          newCleanBuildCommand = newCleanBuildCommand.replace(
+          newCleanBuildCommandStr = newCleanBuildCommandStr.replace(
             "${" + elem + "}",
             itemAbsString
           );
         } else if (elem === "clicked_rel_path") {
-          newCleanBuildCommand = newCleanBuildCommand.replace(
+          newCleanBuildCommandStr = newCleanBuildCommandStr.replace(
             "${" + elem + "}",
             itemRelString
           );
         } else if (elem === "json_file_path") {
-          newCleanBuildCommand = newCleanBuildCommand.replace(
+          newCleanBuildCommandStr = newCleanBuildCommandStr.replace(
             "${" + elem + "}",
-            jsonFilePath
+            jsonFilePathString
           );
         } else if (elem.includes("config:")) {
           var propertyPath = elem;
@@ -245,7 +250,7 @@ async function processCommand(uri: vscode.Uri, command: string) {
           if (configData) {
             let result: string = configData.toString();
 
-            newCleanBuildCommand = newCleanBuildCommand.replace(
+            newCleanBuildCommandStr = newCleanBuildCommandStr.replace(
               "${" + elem + "}",
               result
             );
@@ -264,20 +269,20 @@ async function processCommand(uri: vscode.Uri, command: string) {
               break;
             }
           }
-          newCleanBuildCommand = newCleanBuildCommand.replace(
+          newCleanBuildCommandStr = newCleanBuildCommandStr.replace(
             "${" + elem + "}",
             result
           );
         }
         console.log(elem);
       }
-      console.log(newCleanBuildCommand);
+      console.log(newCleanBuildCommandStr);
 
       // Create a new terminal
       const terminal = vscode.window.createTerminal("SwotIDE Terminal");
 
       // Send the command to the terminal
-      terminal.sendText(newCleanBuildCommand);
+      terminal.sendText(newCleanBuildCommandStr);
 
       // Show the terminal
       terminal.show();
